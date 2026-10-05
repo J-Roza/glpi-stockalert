@@ -1,0 +1,28 @@
+{
+  "_commentaire": "Seuils d'alerte stock. Les filtres à null sont ignorés.",
+  "statut_stock": "En stock",
+  "alertes": [
+    {
+      "nom": "Portables Lenovo",
+      "item_type": "Computer",
+      "seuil": 8,
+      "filtres": {
+        "fabricant": "Lenovo",
+        "type": "Ordinateur portable",
+        "lieu": "Champs-sur-Marne",
+        "modele": "P14s Gen 6"
+      }
+    },
+    {
+      "nom": "Écrans — Champs-sur-Marne",
+      "item_type": "Monitor",
+      "seuil": 6,
+      "filtres": {
+        "fabricant": null,
+        "type": null,
+        "lieu": "Champs-sur-Marne",
+        "modele": null
+      }
+    }
+  ]
+}
