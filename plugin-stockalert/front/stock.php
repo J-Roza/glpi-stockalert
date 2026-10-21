@@ -24,7 +24,7 @@ Html::header('Stock Alert', $_SERVER['PHP_SELF'], 'tools', 'PluginStockalertStoc
             <small class="text-muted">
                 <?php if (empty($alertes)): ?>
                     Aucune règle configurée —
-                    <a href="<?= Plugin::getWebDir('stockalert') ?>/front/config.php">Ajouter une alerte</a>
+                    <a href="<?= '/plugins/stockalert' ?>/front/config.php">Ajouter une alerte</a>
                 <?php elseif ($nbAlertes > 0): ?>
                     <span class="text-danger fw-bold"><?= $nbAlertes ?> alerte(s) active(s)</span>
                     sur <?= count($alertes) ?> règle(s)
@@ -35,11 +35,11 @@ Html::header('Stock Alert', $_SERVER['PHP_SELF'], 'tools', 'PluginStockalertStoc
             </small>
         </div>
         <div class="ms-auto d-flex gap-2">
-            <a href="<?= Plugin::getWebDir('stockalert') ?>/front/config.php"
+            <a href="<?= '/plugins/stockalert' ?>/front/config.php"
                class="btn btn-sm btn-outline-primary">
                 <i class="ti ti-settings me-1"></i>Configuration
             </a>
-            <a href="<?= Plugin::getWebDir('stockalert') ?>/front/stock.php"
+            <a href="<?= '/plugins/stockalert' ?>/front/stock.php"
                class="btn btn-sm btn-outline-secondary">
                 <i class="ti ti-refresh me-1"></i>Actualiser
             </a>
@@ -52,7 +52,7 @@ Html::header('Stock Alert', $_SERVER['PHP_SELF'], 'tools', 'PluginStockalertStoc
             <i class="ti ti-info-circle"></i>
             <span>
                 Aucune alerte configurée.
-                <a href="<?= Plugin::getWebDir('stockalert') ?>/front/config.php">Créer la première alerte</a>.
+                <a href="<?= '/plugins/stockalert' ?>/front/config.php">Créer la première alerte</a>.
             </span>
         </div>
 

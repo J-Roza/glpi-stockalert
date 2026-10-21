@@ -41,17 +41,17 @@ function plugin_stockalert_uninstall(): bool {
 function plugin_stockalert_getMenuContent(): array {
     return [
         'title'   => 'Stock Alert',
-        'page'    => Plugin::getWebDir('stockalert') . '/front/stock.php',
+        'page'    => '/plugins/stockalert/front/stock.php',
         'icon'    => 'ti ti-alert-triangle',
         'options' => [
             'stock' => [
                 'title' => 'Surveillance',
-                'page'  => Plugin::getWebDir('stockalert') . '/front/stock.php',
+                'page'  => '/plugins/stockalert/front/stock.php',
                 'icon'  => 'ti ti-alert-triangle',
             ],
             'config' => [
                 'title' => 'Configuration',
-                'page'  => Plugin::getWebDir('stockalert') . '/front/config.php',
+                'page'  => '/plugins/stockalert/front/config.php',
                 'icon'  => 'ti ti-settings',
             ],
         ],

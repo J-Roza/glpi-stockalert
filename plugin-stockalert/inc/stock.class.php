@@ -15,17 +15,17 @@ class PluginStockalertStock extends CommonGLPI {
     public static function getMenuContent(): array {
         return [
             'title'   => 'Stock Alert',
-            'page'    => Plugin::getWebDir('stockalert') . '/front/stock.php',
+            'page'    => '/plugins/stockalert' . '/front/stock.php',
             'icon'    => 'ti ti-alert-triangle',
             'options' => [
                 'stock' => [
                     'title' => 'Surveillance',
-                    'page'  => Plugin::getWebDir('stockalert') . '/front/stock.php',
+                    'page'  => '/plugins/stockalert' . '/front/stock.php',
                     'icon'  => 'ti ti-alert-triangle',
                 ],
                 'config' => [
                     'title' => 'Configuration',
-                    'page'  => Plugin::getWebDir('stockalert') . '/front/config.php',
+                    'page'  => '/plugins/stockalert' . '/front/config.php',
                     'icon'  => 'ti ti-settings',
                 ],
             ],
@@ -118,7 +118,9 @@ class PluginStockalertStock extends CommonGLPI {
                     $parts       = explode('.', $field);
                     $quotedField = implode('.', array_map(fn($p) => $DB->quoteName($p), $parts));
                     $quotedVals  = implode(',', array_map(fn($v) => $DB->quoteValue($v), $vals));
-                    $conditions[] = new QueryExpression("{$quotedField} IN ({$quotedVals})");
+                    // Compatibilité GLPI 11 (QueryExpression) et GLPI 12 (\Glpi\DBAL\QueryExpression)
+                    $exprClass    = class_exists('\\Glpi\\DBAL\\QueryExpression') ? '\\Glpi\\DBAL\\QueryExpression' : 'QueryExpression';
+                    $conditions[] = new $exprClass("{$quotedField} IN ({$quotedVals})");
                 }
             }
         }
@@ -316,7 +318,7 @@ class PluginStockalertStock extends CommonGLPI {
             $obj      = new $itemType();
             $basePage = $obj->getSearchURL(false);
         } catch (\Throwable $e) {
-            return Plugin::getWebDir('stockalert') . '/front/stock.php';
+            return '/plugins/stockalert' . '/front/stock.php';
         }
 
         // IDs de champs de recherche GLPI (communs aux types d'assets standard)
@@ -395,7 +397,7 @@ class PluginStockalertStock extends CommonGLPI {
         return [
             'number' => $first ? ($first['quantite'] >= 0 ? $first['quantite'] : 0) : 0,
             'label'  => $first ? $first['nom'] : 'Aucune alerte',
-            'url'    => $first ? self::buildSearchUrl($first) : Plugin::getWebDir('stockalert') . '/front/stock.php',
+            'url'    => $first ? self::buildSearchUrl($first) : '/plugins/stockalert' . '/front/stock.php',
             'color'  => '#27ae60',
         ];
     }

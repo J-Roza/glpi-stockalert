@@ -133,7 +133,7 @@ Html::header('Stock Alert — Configuration', $_SERVER['PHP_SELF'], 'tools', 'Pl
             <h2 class="mb-0">Configuration des alertes</h2>
             <small class="text-muted">Définissez les seuils de stock à surveiller</small>
         </div>
-        <a href="<?= Plugin::getWebDir('stockalert') ?>/front/stock.php"
+        <a href="<?= '/plugins/stockalert' ?>/front/stock.php"
            class="btn btn-sm btn-outline-secondary ms-auto">
             <i class="ti ti-arrow-left me-1"></i>Retour surveillance
         </a>
@@ -159,7 +159,7 @@ Html::header('Stock Alert — Configuration', $_SERVER['PHP_SELF'], 'tools', 'Pl
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="<?= Plugin::getWebDir('stockalert') ?>/front/config.php">
+                    <form method="POST" action="<?= '/plugins/stockalert' ?>/front/config.php">
                         <input type="hidden" name="_glpi_csrf_token" value="<?= Session::getNewCSRFToken() ?>">
                         <input type="hidden" name="action" value="<?= $alerteEdition ? 'modifier' : 'ajouter' ?>">
                         <?php if ($alerteEdition): ?>
@@ -276,7 +276,7 @@ Html::header('Stock Alert — Configuration', $_SERVER['PHP_SELF'], 'tools', 'Pl
                                 <?= $alerteEdition ? 'Enregistrer' : 'Créer l\'alerte' ?>
                             </button>
                             <?php if ($alerteEdition): ?>
-                                <a href="<?= Plugin::getWebDir('stockalert') ?>/front/config.php"
+                                <a href="<?= '/plugins/stockalert' ?>/front/config.php"
                                    class="btn btn-outline-secondary">Annuler</a>
                             <?php endif; ?>
                         </div>
