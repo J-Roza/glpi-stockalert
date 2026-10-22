@@ -57,9 +57,9 @@
                 + 'flex-direction:row!important;'
                 + 'flex-wrap:wrap!important;'
                 + 'gap:8px!important;'
-                + 'padding:10px!important;'
+                + 'padding:14px 10px 10px 10px!important;'
                 + 'align-items:stretch!important;'
-                + 'overflow-x:hidden!important;'
+                + 'overflow:visible!important;'
                 + '}'
                 // Tuile : taille fixe uniforme
                 + '#' + cardId + ' a.line {'
