@@ -50,9 +50,17 @@
             var cardId = card.id || ('sa-' + Date.now());
             if (!card.id) card.id = cardId;
 
+            // grid-stack-item-content est un parent — marqué par attribut pour CSS ciblé
+            var gsic = card.closest('.grid-stack-item-content');
+            if (gsic) gsic.setAttribute('data-sa-widget', '1');
+
             var css =
-                // Conteneur : flex row, hauteur fixe
-                '#' + cardId + ' .summary-numbers-container {'
+                '.grid-stack-item-content[data-sa-widget="1"]{'
+                + 'overflow:visible!important;'
+                + '}'
+                +
+                // Conteneur : flex row
+                + '#' + cardId + ' .summary-numbers-container {'
                 + 'display:flex!important;'
                 + 'flex-direction:row!important;'
                 + 'flex-wrap:wrap!important;'
