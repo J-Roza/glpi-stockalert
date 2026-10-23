@@ -23,18 +23,30 @@
         return '#' + [r,g,b].map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
     }
 
-    // Raccourcit "NOM (SEUIL : X)" → nom seul
+    // Raccourcit "NOM (SEUIL : X)" → nom seul + corrige les inline styles de GLPI
     function fixLabels() {
-        document.querySelectorAll('.card.summary-numbers a.line .label').forEach(function(el) {
-            if (el.dataset.saFixed) return;
-            el.dataset.saFixed = '1';
-            var text = el.textContent.trim();
-            var m = text.match(/^(.*?)\s*\(SEUIL\s*:\s*(\d+)\)\s*$/i);
-            if (m) {
-                el.innerHTML = '<span class="sa-name">' + m[1].trim() + '</span>';
-            } else {
-                el.innerHTML = '<span class="sa-name">' + text + '</span>';
+        document.querySelectorAll('.card.summary-numbers a.line').forEach(function(line) {
+            // Masque l'icône via inline style (GLPI la ré-affiche par JS)
+            var icon = line.querySelector('i.icon');
+            if (icon) icon.style.setProperty('display', 'none', 'important');
+
+            // Corrige la font-size du chiffre (GLPI met ~57px en inline)
+            var fn = line.querySelector('.formatted-number');
+            if (fn) fn.style.setProperty('font-size', '1rem', 'important');
+
+            // Corrige le label
+            var label = line.querySelector('.label');
+            if (!label) return;
+            if (label.dataset.saFixed) {
+                // Met à jour la font-size si GLPI l'a recalculée
+                label.style.setProperty('font-size', '1rem', 'important');
+                return;
             }
+            label.dataset.saFixed = '1';
+            label.style.setProperty('font-size', '1rem', 'important');
+            var text = label.textContent.trim();
+            var m = text.match(/^(.*?)\s*\(SEUIL\s*:\s*(\d+)\)\s*$/i);
+            label.innerHTML = '<span class="sa-name">' + (m ? m[1].trim() : text) + '</span>';
         });
     }
 
@@ -52,7 +64,12 @@
 
             // grid-stack-item-content est un parent — marqué par attribut pour CSS ciblé
             var gsic = card.closest('.grid-stack-item-content');
-            if (gsic) gsic.setAttribute('data-sa-widget', '1');
+            if (gsic) {
+                gsic.setAttribute('data-sa-widget', '1');
+                // Réduit le conteneur à la hauteur du contenu
+                gsic.style.setProperty('height', 'fit-content', 'important');
+                gsic.style.setProperty('min-height', '0', 'important');
+            }
 
             var css =
                 '.grid-stack-item-content[data-sa-widget="1"]{'
@@ -65,7 +82,7 @@
                 + 'flex-direction:row!important;'
                 + 'flex-wrap:wrap!important;'
                 + 'gap:8px!important;'
-                + 'padding:14px 10px 10px 10px!important;'
+                + 'padding:16px 10px 10px 10px!important;'
                 + 'align-items:stretch!important;'
                 + 'overflow:visible!important;'
                 + '}'
@@ -73,11 +90,11 @@
                 + '#' + cardId + ' a.line {'
                 + 'flex:1 1 0!important;'
                 + 'min-width:110px!important;'
-                + 'min-height:100px!important;'
+                + 'min-height:70px!important;'
                 + 'min-width:130px!important;'
                 + 'max-width:220px!important;'
                 + 'border-radius:16px!important;'
-                + 'transition:transform .18s ease,box-shadow .18s ease!important;'
+                + 'transition:filter .18s ease,box-shadow .18s ease!important;'
                 + 'overflow:hidden!important;'
                 + 'margin:0!important;'
                 + 'display:flex!important;'
@@ -89,8 +106,8 @@
                 + 'text-align:center!important;'
                 + '}'
                 + '#' + cardId + ' a.line:hover {'
-                + 'transform:translateY(-4px)!important;'
-                + 'box-shadow:0 10px 28px rgba(0,0,0,.32)!important;'
+                + 'filter:brightness(1.12)!important;'
+                + 'box-shadow:0 6px 22px rgba(0,0,0,.30)!important;'
                 + 'text-decoration:none!important;'
                 + '}'
                 + '#' + cardId + ' a.line .content {'
@@ -98,13 +115,11 @@
                 + 'flex-direction:column!important;'
                 + 'align-items:center!important;'
                 + 'justify-content:center!important;'
-                + 'gap:2px!important;'
+                + 'gap:6px!important;'
                 + 'width:100%!important;'
-                + 'height:100%!important;'
                 + '}'
                 + '#' + cardId + ' a.line .icon {'
-                + 'font-size:1.1rem!important;opacity:.6!important;'
-                + 'line-height:1!important;'
+                + 'display:none!important;'
                 + '}'
                 + '#' + cardId + ' a.line .number {'
                 + 'font-size:2.4rem!important;font-weight:800!important;'
